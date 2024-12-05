@@ -2,10 +2,10 @@
   <img src="pictures/logo.png" alt="CoverImage" width="800px"/>
 </div>
 <p>
-SmoothBus is a fuel gauge conversion for the classic VW Bus. More specifically a 1978 Bus. It's an all in one package with a small form factor that is slightly larger than the original gauge and can be installed with very minimal modifications to the dash. A majority of this project was done over a weekend, so don't expect perfection, but for my case it was a huge upgrade to a non working gauge.
+SmoothBus is a fuel gauge conversion for the classic VW Bus. More specifically a 1978 Bus. It's an all in one package with a small form factor that is slightly larger than the original gauge and can be installed with very minimal modifications to the dash. This started as a weekend project after my fuel gauge was showing me readings from all over the place.
 </p>
 <p>
-The original gauges in the buses are pretty clever design in my opinion. I've included a picture of it below. You can see it's rather simple and if my understanding is correct the flow of current through it causes the wire to heat up and expand which causes the needle to move to different positions. The current is controlled by the fuel sender float which is located in the fuel tank and is essentially a rheostat. Utilizing this thermal property also smooths out bumps and turns since it takes a second or two for it expand & contract. These things don't normally break, it's the voltage regulator that they are connected to that often goes bad, but what's the fun in replacing that when you can make your own.
+The original gauges in the buses are pretty clever in design. I've included a picture of it below. It's pretty simple and if my understanding is correct, the flow of current through it causes the wire to heat up and expand which causes the needle to move to different positions. The current is controlled by the fuel sender float which is located in the fuel tank and is essentially a rheostat. Utilizing this thermal property also smooths out bumps and turns since it takes a second or two for it expand & contract. These things don't normally break, it's the voltage regulator that they are connected to that often goes bad, but what's the fun in replacing that when you can make your own.
 </p>
 
 <div align="center">
@@ -13,7 +13,7 @@ The original gauges in the buses are pretty clever design in my opinion. I've in
     <br />Original fuel gauge guts.
 </div>
 
-The SmoothBus design ditches the old gauge components including the voltage regulator keeping only the fuel sender float which is used as the variable resistor in the voltage divider circuit. The overall process is still pretty simple, the ATTiny85 microcontroller reads the analog voltage on one of it's pins and outputs that value as a servo position that corresponds to the location on the original dial. The positions & values were determined by some very useful investigations that were done in this [samba forum post](https://www.thesamba.com/vw/forum/viewtopic.php?t=693930). The analog voltage that gets inputted is the voltage divider circuit that consists of a known resistor value (100ohms) and the unknown resistor value from the fuel sender which ranges from 10 ohms to 79ohms. There is also a moving average that is happening with each read. The configuration that I found works best has been a moving average window of 35 that has readings every 200ms. All of this can be easily changed in the code that can be found in `src` directory. It should be pretty easy to setup, it was all written in the Arduino IDE with the [ATTinyCore](https://github.com/SpenceKonde/ATTinyCore) library that adds support to a bunch of tinyAVR devices (very cool project).
+The SmoothBus design ditches the old gauge components including the voltage regulator keeping only the fuel sender float which is used as the variable resistor in the voltage divider circuit. The overall process is still pretty simple, the ATTiny85 microcontroller reads the analog voltage on one of its input pins and outputs that value as a servo position that corresponds to the location on the original dial. The positions & values were determined by some very useful investigations that were done in this [samba forum post](https://www.thesamba.com/vw/forum/viewtopic.php?t=693930). The analog voltage that gets inputted is the voltage divider circuit that consists of a known resistor value (100ohms) and the unknown resistor value from the fuel sender which ranges from 10 ohms to 79ohms. There is also a moving average that is happening with each read. The configuration that I found works best has been a moving average window of 35 that has readings every 200ms. All of this can be easily changed in the code that can be found in `src` directory. It should be pretty easy to setup, it was all written in the Arduino IDE with the [ATTinyCore](https://github.com/SpenceKonde/ATTinyCore) library that adds support to a bunch of tinyAVR devices (very cool project).
 
 Programming the board wasn't the most intuitive. I decided to have probe points on the board (bottom left corner of PCB) that I thought would be a good idea to easily program the device, but it ended up being a bit finicky. It required making a jig and using tiny spring loaded probes that were then connected to an Arduino Mega that was used as an ISP (see below). [I thought I learned my lesson last time](https://gitlab.com/_Pegor/kepler_fw/-/tree/master/Hardware?ref_type=heads#programming-jig). I think the rest of design is rather straight forward. It contains a voltage regulator that can handle up to 35V and also has some red LEDs to indicate low fuel level. The schematic is included in `hardware/PCB` along with the gerber zip that you can send to a PCB manufacturer of your choice.
 
@@ -75,10 +75,16 @@ Lastly here is a picture of the finished product and a gif of it in action. Happ
             </td>
             <td>
                 <div align="center">
-                    <img src="pictures/smoothbus.gif" alt="Installed Gauge" width="400"/>
+                    <img src="pictures/smoothbus.gif" alt="Installed Gauge" width="360"/>
                     <br /> GIF of it in action
                 </div>
             </td>
         </tr>
     </table>
+</div>
+<br>
+<br>
+Almost forgot! Here is the little loaf if you're curious.
+<div align="center">
+  <img src="pictures/loaf.jpg" alt="loaf" width="800px"/>
 </div>
