@@ -2,6 +2,57 @@
   <img src="pictures/logo.png" alt="CoverImage" width="800px"/>
 </div>
 <p>
+
+# V2 - 2/23/25
+<div align="center">
+    <table>
+        <tr>
+            <td>
+                <div align="center">
+                    <img src="pictures/render_v2_front.png" alt="V2 Front" width="500"/>
+                    <br />V2 Front
+                </div>
+            </td>
+            <td>
+                <div align="center">
+                    <img src="pictures/render_v2_top.png" alt="V2 Top" width="500"/>
+                    <br />V2 Top
+                </div>
+            </td>
+            <td>
+                <div align="center">
+                    <img src="pictures/render_v2_back.png" alt="V2 Back" width="500"/>
+                    <br /> V2 Back
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+### What's new in V2?
+#### Hardware:
+* New PCB! Now with input voltage filtering, external watchdog timer, and easier programming connector. 
+* Switched to automotive grade ICs (except attiny85, can't find any in stock).
+* Reduced voltage divider known resistor value to increase accuracy.
+* New 3D printed enclosure to accommodate the new connector, `programming_jig.stl` no longer needed.
+#### Software:
+* Added new calibration values for fuel sender.
+* Added watchdog timer support.
+* Increased moving average window size.
+* Cleaned up & simplified some chunks of code.
+* Removed unused debug.
+
+After getting some feedback on the initial release I decided it was time to put together another build with some improvements that were suggested and also some that I thought would be beneficial. One important change was getting better calibration values from my fuel sender. Previously I was using the data off a forum post that is mentioned below, but I came to realize that my fuel sender (Classic Line 8115800400 from BusDepot) has slightly different readings. I decided to remove it out of the fuel tank and mount it inside a 5 gallon bucket which had lines at the corresponding fuel heights (35mm = R, 75mm = 1/4 tank, 130mm = 1/2 tank, 200mm = Full) and then poured water up to those lines and took multiple readings and averaged them to create the table seen in the code. I left the old values in case it matches someones out there.
+
+In terms of hardware a big improvement is the input voltage filtering, which was completely missing in my original build. Although I didn't run into any power related issues with the first build (at least not for the time I used it), it's better to be safe and this gave me an opportunity to learn a bit more about transient voltages. Speaking of voltages I also upgrade the known resistor R1 in the voltage divider circuit be a lower resistance (50 ohms) and also better rated for the power it's handling. The lower value on this resistor should provide a slightly more accurate reading of the fuel senders position since it's closer to its range. Last new addition I'd like to highlight is the new watchdog timer. I think it's a good failsafe to have in the event there are any funky power glitches that puts the mcu in a bad state. A quick reset from the watchdog in this scenario and we're back up and running and the user wouldn't notice a thing. Hope you enjoy these updates.
+<br>
+<br>
+
+</p>
+
+<p>
+
+# SmoothBus - 12/4/24
 SmoothBus is a fuel gauge conversion for the classic VW Bus. More specifically a 1978 Bus. It's an all in one package with a small form factor that is slightly larger than the original gauge and can be installed with very minimal modifications to the dash. This started as a weekend project after my fuel gauge was showing me readings from all over the place.
 </p>
 <p>
